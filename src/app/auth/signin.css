@@ -1,0 +1,16 @@
+.formSignInUp {
+  width: 20rem;  /*как правильно задать ширину для формы?*/
+}
+
+.formTitle {
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.btnSingInUp {
+  width: 100%;
+}
+
+.linkNewAcc {
+  text-align: center;
+}

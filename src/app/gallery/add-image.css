@@ -1,0 +1,54 @@
+.formAddImgPanel {
+  width: 70rem;
+}
+
+.imgSrc, .imgInfo {
+  width: 50%;
+  margin: 0 10px;
+}
+
+.titlePanel {
+  margin-bottom: 1.5rem;
+}
+
+.dragAndDropPanel {
+  height: 26rem;
+  background-color: gainsboro;
+}
+
+.btnBrowseImg {
+  width: 100%;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0; /*кроссбраузерность добавить*/
+}
+
+.panelTitle {
+  padding: 0 1rem;
+  text-align: center;
+  font-size: 2rem;
+}
+
+.panelDescr {
+  font-size: 1rem;
+}
+
+.tagsPanel {
+  height: 5rem;
+  background-color: gainsboro;
+}
+
+.rowTag {
+  margin-top: 0.2rem;
+}
+
+.btnAddTag {
+  margin-left: .5rem;
+}
+
+.textareaDescr {
+  height: 7rem;
+}
+
+.btnPublish {
+  width: 10rem;
+}
