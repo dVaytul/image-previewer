@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './add-image.css';
 
-class AddImagePanel extends React.Component {
+class AddImagePanel extends Component {
   constructor(props) {
     super(props);
     const name = props.name;
@@ -53,7 +53,7 @@ class AddImagePanel extends React.Component {
                 </p>
               </p>
             </div>
-            <button type="submit" className="btn btn-secondary btnBrowseImg">
+            <button type="submit" className="btn btn-outline-secondary btnBrowseImg">
               Browse image manually
             </button>
           </div>
@@ -72,7 +72,7 @@ class AddImagePanel extends React.Component {
             <span className="d-flex flex-row rowTag">
               <input type="text" className="form-control" placeholder="Write a tag..."
                      value={this.state.value} onChange={this.onTagsChange} />
-              <button type="button" className="btn btn-secondary btnAddTag">Add tag</button>
+              <button type="button" className="btn btn-outline-secondary btnAddTag">Add tag</button>
             </span>
           </p>
           <p>

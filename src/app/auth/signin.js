@@ -3,7 +3,7 @@ import './signin.css';
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 
-class SignIn extends React.Component {
+class SignIn extends Component {
   constructor(props) {
     super(props);
     const email = props.email;
@@ -45,7 +45,7 @@ class SignIn extends React.Component {
             </small>
           </a>
         </p>
-        <button type="submit" className="btn btn-primary btnSingInUp">Sign in</button>
+        <button type="submit" className="btn btn-primary btn-block">Sign in</button>
         <hr />
         <p className="linkNewAcc">
           <a href='#'>

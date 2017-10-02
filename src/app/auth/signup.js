@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 
-class SignUp extends React.Component {
+class SignUp extends Component {
   constructor(props) {
     super(props);
     const username = props.username;
@@ -61,7 +61,7 @@ class SignUp extends React.Component {
           <input type="password" className="form-control" placeholder="Confirm password"
                  value={this.state.value} onChange={this.onConfirmedPassChange} />
         </p>
-        <button type="submit" className="btn btn-primary btnSingInUp">Sign up</button>
+        <button type="submit" className="btn btn-primary btn-block">Sign up</button>
       </form>
     );
   }
