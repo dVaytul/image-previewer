@@ -1,33 +1,22 @@
-import React, { Component } from 'react';
-import './App.css';
-import SignIn from "./app/auth/signin.js";
-import SignUp from "./app/auth/signup.js";
-import AddImagePanel from "./app/gallery/add-image.js";
-import Gallery from "./app/gallery/gallery.js";
+import React, { Component } from "react";
+import "./App.css";
+import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+
+import Header from "./app/common/header"
+import Main from "./app/common/main"
+import Footer from "./app/common/footer"
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-
-{/*         <div className="d-flex flex-row justify-content-center ">
-          <SignIn/>
+        <div className="gallery">
+          <Header/>
+          <div className="content">
+            <Main/>
+          </div>
+          <Footer/>
         </div>
-        <br/>
-        <hr />
-        <div className="d-flex flex-row justify-content-center ">
-          <SignUp/>
-        </div>
-        <br/>
-        <hr />
-        <div className="d-flex flex-row justify-content-center ">
-          <AddImagePanel/>
-        </div>
-        <br/>*/}
-        <div className="d-flex">
-          <Gallery/>
-        </div>
-
       </div>
     );
   }

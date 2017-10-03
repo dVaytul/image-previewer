@@ -1,0 +1,22 @@
+.header {
+  background-color: gainsboro;
+  min-height: 70px; /* правильно ли??*/
+}
+
+.logo img{
+  margin: 0 10px;
+  width: 60px;
+  height: 60px;
+}
+
+.logo:hover {
+  cursor: pointer;
+}
+
+.header-title {
+  font-size: 2em;
+}
+
+.auth {
+  margin-right: 10px;
+}

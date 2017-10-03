@@ -1,7 +1,5 @@
-import React, { Component } from 'react';
-//import './signup.css';
-import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
-
+import React, { Component } from "react";
+//import "./signup.css";
 
 class SignUp extends Component {
   constructor(props) {
