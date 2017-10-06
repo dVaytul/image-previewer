@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-//import "./signup.css";
+import "./signup.css";
+
+import {Link, withRouter} from "react-router-dom";
 
 class SignUp extends Component {
   constructor(props) {
@@ -34,9 +36,10 @@ class SignUp extends Component {
   }
 
   handleSubmit(event) {
-    alert('Username: ' + this.state.username + ' Email: ' + this.state.email
-          + ' Pass: ' + this.state.pass + ' Confirmed Pass: ' + this.state.confirmedPass);
+    alert('Username: ' + this.state.username + '\nEmail: ' + this.state.email
+          + '\nPass: ' + this.state.pass + '\nConfirmed Pass: ' + this.state.confirmedPass);
     event.preventDefault();
+    this.props.history.push("/");
   }
 
   render() {
@@ -60,9 +63,16 @@ class SignUp extends Component {
                  value={this.state.value} onChange={this.onConfirmedPassChange} />
         </p>
         <button type="submit" className="btn btn-primary btn-block">Sign up</button>
+
+        <hr />
+        <p className="linkNewAcc">
+          <Link to="/signin">
+            Already have an account? Sign in here
+          </Link>
+        </p>
       </form>
     );
   }
 }
 
-export default SignUp;
+export default withRouter(SignUp);

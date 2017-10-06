@@ -1,6 +1,6 @@
 .header {
-  background-color: gainsboro;
   min-height: 70px; /* правильно ли??*/
+  border-bottom: 1px solid gainsboro;
 }
 
 .logo img{
@@ -14,6 +14,7 @@
 }
 
 .header-title {
+  margin-left: 10px;
   font-size: 2em;
 }
 

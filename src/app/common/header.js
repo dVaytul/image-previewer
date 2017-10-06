@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import "./header.css";
-
 import {Link} from "react-router-dom";
+import AuthBlock from "../auth/auth-block-for-header";
+
+import "../service/auth-service";
 
 class Header extends Component {
 
@@ -14,11 +16,9 @@ class Header extends Component {
                  alt="logo"/>
           </Link>
         </div>
-        <div className="header-title ">The image previewer</div>
+        <div className="header-title ">Welcome to the image previewer</div>
         <div className="ml-auto auth">
-          <Link to="/signup">Sign Up</Link>
-          <span> | </span>
-          <Link to="/signin">Sign In</Link>
+          <AuthBlock loggedIn={false}/>
         </div>
       </header>
     );

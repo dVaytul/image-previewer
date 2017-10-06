@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import "./App.css";
-import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/css/bootstrap.css";
 
 import Header from "./app/common/header"
 import Main from "./app/common/main"
 import Footer from "./app/common/footer"
+import AuthService from "./app/auth/auth-block-for-header";
 
 class App extends Component {
   render() {

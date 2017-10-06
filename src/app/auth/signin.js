@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import "./signin.css";
 
+import {Link, withRouter} from "react-router-dom";
+
 class SignIn extends Component {
   constructor(props) {
     super(props);
-    const email = props.email;
-    const pass = props.pass;
+    const {email, pass} = props;
+
     this.state = {email: email, pass: pass};
 
     this.onEmailChange = this.onEmailChange.bind(this);
@@ -22,8 +24,9 @@ class SignIn extends Component {
   }
 
   handleSubmit(event) {
-    alert('Email: ' + this.state.email + ' pass: ' + this.state.pass);
+    alert('Email: ' + this.state.email + '\nPass: ' + this.state.pass);
     event.preventDefault();
+    this.props.history.push("/");
   }
 
   render() {
@@ -31,11 +34,11 @@ class SignIn extends Component {
       <form className="formSignInUp" onSubmit={this.handleSubmit}>
         <h2 className="formTitle">Sign in</h2>
         <p>
-          <input type="email" className="form-control" placeholder="Email"
+          <input type="email" className="form-control" placeholder="Email" required
                  value={this.state.value} onChange={this.onEmailChange} />
         </p>
         <p>
-          <input type="password" className="form-control" placeholder="Password"
+          <input type="password" className="form-control" placeholder="Password" required
                  value={this.state.value} onChange={this.onPassChange} />
           <a href='#'>
             <small>
@@ -46,13 +49,13 @@ class SignIn extends Component {
         <button type="submit" className="btn btn-primary btn-block">Sign in</button>
         <hr />
         <p className="linkNewAcc">
-          <a href='#'>
+          <Link to="/signup">
             Don't have an account? Sign up here
-          </a>
+          </Link>
         </p>
       </form>
     );
   }
 }
 
-export default SignIn;
+export default withRouter(SignIn);
