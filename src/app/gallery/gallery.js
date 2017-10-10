@@ -3,7 +3,61 @@ import "./gallery.css";
 
 import {withRouter} from "react-router-dom";
 
+import Lightbox from "react-images";
+
 class Gallery extends Component {
+  constructor() {
+    super();
+    this.state = {
+      lightboxIsOpen: false,
+      currentImage: 0
+    }
+    this.closeLightbox = this.closeLightbox.bind(this);
+    this.gotoNext = this.gotoNext.bind(this);
+    this.gotoPrevious = this.gotoPrevious.bind(this);
+    this.gotoImage = this.gotoImage.bind(this);
+    this.openLightbox = this.openLightbox.bind(this);
+
+    this.onClickFunc = this.onClickFunc.bind(this);
+  };
+
+  openLightbox(index, event) {
+    event.preventDefault();
+    this.setState({
+      currentImage: index,
+      lightboxIsOpen: true
+    });
+  };
+
+  closeLightbox() {
+    this.setState({
+      currentImage: 0,
+      lightboxIsOpen: false
+    });
+  };
+
+  gotoPrevious() {
+    this.setState({
+      currentImage: this.state.currentImage - 1
+    });
+  };
+
+  gotoNext() {
+    this.setState({
+      currentImage: this.state.currentImage + 1
+    });
+  };
+
+  gotoImage(index) {
+    this.setState({
+      currentImage: index
+    });
+  };
+
+  onClickFunc(event) {
+    this.openLightbox(1, event);
+  };
+
 
   onAddImage = () => {
     this.props.history.push("/add-image");
@@ -32,7 +86,7 @@ class Gallery extends Component {
         <div className="gallery-panel d-flex">
           <div className="images-panel flex-column">
             <div className="image-block">
-              <img className="image" alt="" src="https://wallpaperbrowse.com/media/images/fall-wallpapers-18.jpg" />
+              <img onClick={this.onClickFunc} className="image" alt="" src="https://wallpaperbrowse.com/media/images/fall-wallpapers-18.jpg" />
             </div>
             <div className="image-block">
               <img className="image" alt="" src="http://files.vladstudio.com/joy/the_moon_and_the_ocean/wall/vladstudio_the_moon_and_the_ocean_1024x768_signed.jpg" />
@@ -92,6 +146,18 @@ class Gallery extends Component {
             </div>
           </div>
         </div> {/*gallery-panel*/}
+
+        <Lightbox
+          images={[
+            { src: 'https://wallpaperbrowse.com/media/images/fall-wallpapers-18.jpg' },
+            { src: 'http://files.vladstudio.com/joy/the_moon_and_the_ocean/wall/vladstudio_the_moon_and_the_ocean_1024x768_signed.jpg' }
+          ]}
+          isOpen={this.state.lightboxIsOpen}
+          onClickPrev={this.gotoPrevious}
+          onClickNext={this.gotoNext}
+          onClose={this.closeLightbox}
+        />
+
       </div>
     );
   }

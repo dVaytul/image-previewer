@@ -4,10 +4,13 @@
   "private": true,
   "dependencies": {
     "bootstrap": "^4.0.0-beta",
+    "formsy-react": "^1.0.0",
+    "formsy-react-components": "^1.0.0-alpha.7",
     "jquery": "^3.2.1",
     "popper.js": "^1.12.5",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
+    "react-images": "^0.5.8",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.0.14"
