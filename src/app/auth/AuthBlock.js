@@ -1,33 +1,35 @@
 import React, { Component } from "react";
 import {Link} from "react-router-dom";
 
+import AuthService from "../service/AuthService";
+
 class AuthBlock extends Component {
   constructor(props) {
     super(props);
-    const {i, name} = props;
-    this.state = {i: this.props.loggedIn, name: name};
-
+    this.state = {loggedIn: AuthService.isLoggedIn()};
     this.onLogOut = this.onLogOut.bind(this);
   }
 
   onLogOut(event) {
-      //this.state.i = this.props.loggedIn;
-      //this.props.history.push("/");
+    this.state.loggedIn = AuthService.logOut();
   }
-
 
   render()
   {
+    this.state.loggedIn = AuthService.isLoggedIn();
 
-    if(!this.state.i) {
+    if(this.state.loggedIn) {
+      let user = AuthService.getCurrentUser();
+
       return (
         <div>
           <span className="auth-block-username">
-            Hi, Username |
+            {`Hi, ${user.name} |`}
           </span>
           <Link to="/" onClick={this.onLogOut}> Log out</Link>
         </div>
       );
+
     } else {
       return (
         <div>

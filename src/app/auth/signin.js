@@ -3,6 +3,8 @@ import "./signin.css";
 
 import {Link, withRouter} from "react-router-dom";
 
+import AuthService from "../service/AuthService";
+
 class SignIn extends Component {
   constructor(props) {
     super(props);
@@ -26,12 +28,13 @@ class SignIn extends Component {
   handleSubmit(event) {
     alert('Email: ' + this.state.email + '\nPass: ' + this.state.pass);
     event.preventDefault();
+    AuthService.logIn();
     this.props.history.push("/");
   }
 
   render() {
     return (
-      <form className="formSignInUp" onSubmit={this.handleSubmit}>
+      <form className="formSignInUp container" onSubmit={this.handleSubmit}>
         <h2 className="formTitle">Sign in</h2>
         <p>
           <input type="email" className="form-control" placeholder="Email" required

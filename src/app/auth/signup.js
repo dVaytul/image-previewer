@@ -3,6 +3,8 @@ import "./signup.css";
 
 import {Link, withRouter} from "react-router-dom";
 
+import AuthService from "../service/AuthService";
+
 class SignUp extends Component {
   constructor(props) {
     super(props);
@@ -10,7 +12,9 @@ class SignUp extends Component {
     const email = props.email;
     const pass = props.pass;
     const confirmedPass = props.confirmedPass;
-    this.state = {username: username, email: email, pass: pass, confirmedPass: confirmedPass};
+    this.state = {username: username, email: email, pass: pass,
+                  confirmedPass: confirmedPass
+    };
 
     this.onUsernameChange = this.onUsernameChange.bind(this);
     this.onEmailChange = this.onEmailChange.bind(this);
@@ -39,16 +43,17 @@ class SignUp extends Component {
     alert('Username: ' + this.state.username + '\nEmail: ' + this.state.email
           + '\nPass: ' + this.state.pass + '\nConfirmed Pass: ' + this.state.confirmedPass);
     event.preventDefault();
+    AuthService.logIn();
     this.props.history.push("/");
   }
 
   render() {
     return (
-      <form className="formSignInUp" onSubmit={this.handleSubmit}>
+      <form className="formSignInUp container" onSubmit={this.handleSubmit}>
         <h2 className="formTitle">Sign up</h2>
         <p>
           <input type="text" className="form-control" placeholder="Username"
-                 value={this.state.value} onChange={this.onUsernameChange} />
+                 value={this.state.value} onChange={this.onUsernameChange}/>
         </p>
         <p>
           <input type="email" className="form-control" placeholder="Email"
