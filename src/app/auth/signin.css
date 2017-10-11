@@ -10,3 +10,13 @@
 .linkNewAcc {
   text-align: center;
 }
+
+.formErrors {
+  color: darkred;
+  font: .9em sans-serif;
+  text-align: center;
+}
+
+div .has-error input{
+  box-shadow: 0 0 10px darkred;
+}
