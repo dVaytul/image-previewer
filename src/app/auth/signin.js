@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import "./signin.css";
 import {Link, withRouter} from "react-router-dom";
-import AuthService from "../service/AuthService";
-import {FormErrors} from './FormErrors';
+import AuthService from "../service/auth-service";
+import FormErrors from './form-errors';
 
 class SignIn extends Component {
   constructor (props) {
@@ -33,11 +33,48 @@ class SignIn extends Component {
     switch(fieldName) {
       case 'email':
         emailValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
-        fieldValidationErrors.email = emailValid ? '' : ' is invalid';
+        fieldValidationErrors.email = emailValid ? '' : ' is not valid';
         break;
       case 'password':
-        passwordValid = value.length >= 6;
-        fieldValidationErrors.password = passwordValid ? '': ' is too short';
+        let errorText = "",
+            lenghtPass = false,
+            hasDigit = false,
+          hasNotSpecSymbols = false,
+            hasLowerLetter = false,
+            hasUpperLetter = false;
+
+        if(value.length >= 6) {
+          lenghtPass = true;
+        } else {
+          errorText += ", is to short";
+        }
+
+        if(value.match(/\d/)) {
+          hasDigit = true;
+        } else {
+          errorText += ", hasn't digit";
+        }
+
+        if(!(value.match(/_/)) && !(value.match(/\W/))) {
+          hasNotSpecSymbols = true;
+        } else {
+          errorText += ", has special symbol";
+        }
+
+        if(value.match(/[a-z]/)) {
+          hasLowerLetter = true;
+        } else {
+          errorText += ", hasn't lower case letter";
+        }
+
+        if(value.match(/[A-Z]/)) {
+          hasUpperLetter = true;
+        } else {
+          errorText += ", hasn't upper case letter";
+        }
+
+        passwordValid = lenghtPass && hasDigit && hasNotSpecSymbols && hasLowerLetter && hasUpperLetter;
+        fieldValidationErrors.password = passwordValid ? "": `${errorText.replace(errorText[0], "")}`;
         break;
       default:
         break;
@@ -60,7 +97,7 @@ class SignIn extends Component {
     alert('Email: ' + this.state.email + '\nPass: ' + this.state.password);
     event.preventDefault();
     AuthService.logIn();
-    this.props.history.push("/");
+    this.props.history.push("/gallery");
   }
 
   render() {
@@ -68,27 +105,24 @@ class SignIn extends Component {
       <form className="formSignInUp container" onSubmit={this.handleSubmit}>
         <h2 className="formTitle">Sign in</h2>
         <div className={`form-group ${this.errorClass(this.state.formErrors.email)}`}>
-
-            <input type="email"
-                   className="form-control"
-                   name="email"
-                   placeholder="Email"
-                   value={this.state.email}
-                   onChange={this.handleUserInput}
-                   required
+          <input type="email"
+                 className="form-control"
+                 name="email"
+                 placeholder="Email"
+                 value={this.state.email}
+                 onChange={this.handleUserInput}
+                 required
             />
-
         </div>
         <div className={`form-group ${this.errorClass(this.state.formErrors.password)}`}>
-
-            <input type="password"
-                   className="form-control"
-                   name="password"
-                   placeholder="Password"
-                   value={this.state.password}
-                   onChange={this.handleUserInput}
-                   required
-            />
+          <input type="password"
+                 className="form-control"
+                 name="password"
+                 placeholder="Password"
+                 value={this.state.password}
+                 onChange={this.handleUserInput}
+                 required
+          />
           <a href='#'>
             <small>
               Forgot your password?

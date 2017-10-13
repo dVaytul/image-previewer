@@ -1,14 +1,12 @@
 import React, { Component } from "react";
 import "./gallery.css";
 import {withRouter} from "react-router-dom";
+import DATA from "./DATA.json";
+import ImageBlock from "./image-block";
+import ActiveImage from "./active-image";
+import SearchInput from "./search-input";
 
 //import Lightbox from "react-images";
-
-import MOCK_DATA from "./MOCK_DATA.json";
-import ImageBlock from "./ImageBlock";
-import ActiveImage from "./ActiveImage";
-import SearchInput from "./SearchInput";
-
 
 class Gallery extends Component {
   constructor(props) {
@@ -34,16 +32,15 @@ class Gallery extends Component {
     this.componentDidMount = this.componentDidMount.bind(this);
   };
 
-  componentDidMount() {
-    //get json data from the file
-    const data = MOCK_DATA;
+  componentDidMount() {  //get json data from the file
+    const data = DATA;
     this.setState({images: data});
     this.setState({searchImages: data});
     this.setState({activeImage: data[0]});
   };
 
   changeImageBlock(prop) {
-    var searchText = prop['prop'].toLowerCase(),
+    let searchText = prop['prop'].toLowerCase(),
         searchImages = this.state.searchImages,
         newImageBlock = [];
 
@@ -60,8 +57,6 @@ class Gallery extends Component {
       this.setState({activeImage: newImageBlock[0]});
     }
   };
-
-
 
   //---for LightBox---
   openLightbox(index, event) {
@@ -102,7 +97,6 @@ class Gallery extends Component {
   };
   //---END for LightBox---
 
-
   onAddImage = () => {
     this.props.history.push("/add-image");
   };
@@ -110,6 +104,7 @@ class Gallery extends Component {
   render() {
     return (
       <div className="">  {/*gallery*/}
+
         <SearchInput onSearchTextChange={prop => this.changeImageBlock({prop})}/>
 
         <div className="gallery-panel d-flex">

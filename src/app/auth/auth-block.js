@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import {Link} from "react-router-dom";
-
-import AuthService from "../service/AuthService";
+import AuthService from "../service/auth-service";
 
 class AuthBlock extends Component {
   constructor(props) {
@@ -40,7 +39,6 @@ class AuthBlock extends Component {
       );
     }
   }
-
 }
 
 export default AuthBlock;

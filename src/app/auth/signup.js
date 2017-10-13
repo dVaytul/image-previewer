@@ -1,18 +1,21 @@
 import React, { Component } from "react";
 import "./signup.css";
 import {Link, withRouter} from "react-router-dom";
-import AuthService from "../service/AuthService";
-import {FormErrors} from './FormErrors';
+import AuthService from "../service/auth-service";
+import FormErrors from './form-errors';
 
 class SignUp extends Component {
   constructor (props) {
     super(props);
     this.state = {
+      username: '',
       email: '',
       password: '',
-      formErrors: {email: '', password: ''},
+      confirmed: '',
+      formErrors: {username: '', email: '', password: '', confirmed: ''},
       emailValid: false,
       passwordValid: false,
+      matchPasswords: false,
       formValid: false
     };
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -26,30 +29,88 @@ class SignUp extends Component {
   };
 
   validateField(fieldName, value) {
-    let fieldValidationErrors = this.state.formErrors;
-    let emailValid = this.state.emailValid;
-    let passwordValid = this.state.passwordValid;
+    let fieldValidationErrors = this.state.formErrors,
+        usernameValid = this.state.formErrors,
+        emailValid = this.state.emailValid,
+        passwordValid = this.state.passwordValid,
+        matchPasswords = this.state.matchPasswords;
 
     switch(fieldName) {
+      case 'username':
+        usernameValid = value.match(/^[A-Za-z]+$/);
+        fieldValidationErrors.username = usernameValid ? '' : ' can contain only letters'
+        break;
       case 'email':
         emailValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
-        fieldValidationErrors.email = emailValid ? '' : ' is invalid';
+        fieldValidationErrors.email = emailValid ? '' : ' is not valid';
         break;
+
       case 'password':
-        passwordValid = value.length >= 6;
-        fieldValidationErrors.password = passwordValid ? '': ' is too short';
+        let errorText = "",
+          lengthPass = false,
+          hasDigit = false,
+          hasNotSpecSymbols = false,
+          hasLowerLetter = false,
+          hasUpperLetter = false;
+
+        if(value.length >= 6) {
+          lengthPass = true;
+        } else {
+          errorText += ", is to short";
+        }
+
+        if(value.match(/\d/)) {
+          hasDigit = true;
+        } else {
+          errorText += ", hasn't digit";
+        }
+
+        if(!(value.match(/_/)) && !(value.match(/\W/))) {
+          hasNotSpecSymbols = true;
+        } else {
+          errorText += ", has special symbol";
+        }
+
+        if(value.match(/[a-z]/)) {
+          hasLowerLetter = true;
+        } else {
+          errorText += ", hasn't lower case letter";
+        }
+
+        if(value.match(/[A-Z]/)) {
+          hasUpperLetter = true;
+        } else {
+          errorText += ", hasn't upper case letter";
+        }
+
+        passwordValid = lengthPass && hasDigit && hasNotSpecSymbols && hasLowerLetter && hasUpperLetter;
+        fieldValidationErrors.password = passwordValid ? "": `${errorText.replace(errorText[0], "")}`;
+
+        if (this.state.confirmed != "") {
+          matchPasswords = (this.state.confirmed === this.state.password);
+          fieldValidationErrors.confirmed = matchPasswords ? "" : " does not match";
+        }
         break;
+
+      case 'confirmed':
+        matchPasswords = (this.state.confirmed === this.state.password);
+        fieldValidationErrors.confirmed = matchPasswords ? "" : " password does not match";
+        break;
+
       default:
         break;
     }
     this.setState({formErrors: fieldValidationErrors,
+      usernameValid: usernameValid,
       emailValid: emailValid,
-      passwordValid: passwordValid
+      passwordValid: passwordValid,
+      matchPasswords: matchPasswords,
     }, this.validateForm);
   };
 
   validateForm() {
-    this.setState({formValid: this.state.emailValid && this.state.passwordValid});
+    this.setState({formValid: this.state.usernameValid && this.state.emailValid
+                   && this.state.passwordValid && this.state.matchPasswords});
   };
 
   errorClass(error) {
@@ -58,22 +119,29 @@ class SignUp extends Component {
 
   handleSubmit(event) {
     alert('Username: ' + this.state.username + '\nEmail: ' + this.state.email
-          + '\nPass: ' + this.state.password + '\nConfirmed Pass: ' + this.state.confirmedPass);
+          + '\nPass: ' + this.state.password + '\nConfirmed Pass: ' + this.state.confirmed);
     event.preventDefault();
     AuthService.logIn();
-    this.props.history.push("/");
+    this.props.history.push("/gallery");
   }
 
   render() {
     return (
       <div>
-
         <form className="formSignInUp container" onSubmit={this.handleSubmit}>
           <h2 className="formTitle">Sign up</h2>
-          <p>
-            <input type="text" className="form-control" placeholder="Username"
-                   value={this.state.value} onChange={this.onUsernameChange}/>
-          </p>
+          <div className={`form-group ${this.errorClass(this.state.formErrors.username)}`}>
+            <p>
+              <input type="text"
+                     className="form-control"
+                     name="username"
+                     placeholder="Username"
+                     value={this.state.username}
+                     onChange={this.handleUserInput}
+                     required
+              />
+            </p>
+          </div>
           <div className={`form-group ${this.errorClass(this.state.formErrors.email)}`}>
             <p>
               <input type="email"
@@ -86,7 +154,6 @@ class SignUp extends Component {
               />
             </p>
           </div>
-
           <div className={`form-group ${this.errorClass(this.state.formErrors.password)}`}>
             <p>
               <input type="password"
@@ -99,10 +166,18 @@ class SignUp extends Component {
               />
             </p>
           </div>
-          <p>
-            <input type="password" className="form-control" placeholder="Confirm password"
-                   value={this.state.value} onChange={this.onConfirmedPassChange} />
-          </p>
+          <div className={`form-group ${this.errorClass(this.state.formErrors.confirmed)}`}>
+            <p>
+              <input type="password"
+                     className="form-control"
+                     name="confirmed"
+                     placeholder="Confirm password"
+                     value={this.state.confirmed}
+                     onChange={this.handleUserInput}
+                     required
+              />
+            </p>
+          </div>
 
           <div className="">
             <FormErrors formErrors={this.state.formErrors} />
