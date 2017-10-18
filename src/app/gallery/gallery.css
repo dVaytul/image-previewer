@@ -68,8 +68,9 @@
 
 .info-image img{
   width: 100%;
+  margin-bottom: 20px;
 }
 
-.btn-addImage {
-
+.info-titles {
+  font-weight: bold;
 }

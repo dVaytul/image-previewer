@@ -15,13 +15,13 @@ class ActiveImage extends Component {
             <img src={this.props.activeImage.url}/>
           </div>
           <p className="info-name">
-            Name: {this.props.activeImage.title}
+            <span className="info-titles">Name: </span>{this.props.activeImage.title}
           </p>
           <p className="info-tags">
-            Tags: {this.props.activeImage.tag}
+            <span className="info-titles">Tags: </span>{this.props.activeImage.tags.join(', ')}
           </p>
           <p className="info-description">
-            Description:
+            <span className="info-titles">Description: </span>{this.props.activeImage.descr}
           </p>
         </div>
       );

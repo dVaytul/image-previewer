@@ -6,6 +6,9 @@ import ImageBlock from "./image-block";
 import ActiveImage from "./active-image";
 import SearchInput from "./search-input";
 
+import ReactModal from "react-modal";
+import AddImagePanel from "./add-image";
+
 //import Lightbox from "react-images";
 
 class Gallery extends Component {
@@ -15,6 +18,9 @@ class Gallery extends Component {
       images: [],
       searchImages: [],
       activeImage: {},
+
+      //---for ModalWindow---
+      showModal: false,
 
       //---for LightBox---
       lightboxIsOpen: false,
@@ -30,6 +36,9 @@ class Gallery extends Component {
 
 
     this.componentDidMount = this.componentDidMount.bind(this);
+
+    this.handleOpenModal = this.handleOpenModal.bind(this);
+    this.handleCloseModal = this.handleCloseModal.bind(this);
   };
 
   componentDidMount() {  //get json data from the file
@@ -44,9 +53,17 @@ class Gallery extends Component {
         searchImages = this.state.searchImages,
         newImageBlock = [];
 
-    for(let i=0; i < searchImages.length; i++) {
-      if(searchImages[i]['tag'].toLowerCase().indexOf(searchText) > -1) {
-        newImageBlock.push(searchImages[i]);
+    if(!searchText) {
+      newImageBlock = searchImages;
+    } else {
+      for (let i = 0; i < searchImages.length; i++) {
+        let arr = searchImages[i]['tags'];
+        for (let j = 0; j < arr.length; j++) {
+          if (arr[j].toLowerCase().indexOf(searchText) > -1) {
+            newImageBlock.push(searchImages[i]);
+            j = arr.length;
+          }
+        }
       }
     }
 
@@ -56,6 +73,15 @@ class Gallery extends Component {
     } else {
       this.setState({activeImage: newImageBlock[0]});
     }
+  };
+
+  //---for ModalWindow---
+  handleOpenModal () {
+    this.setState({ showModal: true });
+  };
+
+  handleCloseModal () {
+    this.setState({ showModal: false });
   };
 
   //---for LightBox---
@@ -98,7 +124,8 @@ class Gallery extends Component {
   //---END for LightBox---
 
   onAddImage = () => {
-    this.props.history.push("/add-image");
+    //this.props.history.push("/add-image");
+    this.handleOpenModal();
   };
 
   render() {
@@ -126,6 +153,14 @@ class Gallery extends Component {
             </div>
           </div>
         </div> {/*gallery-panel*/}
+
+        <ReactModal isOpen={this.state.showModal}
+                    onRequestClose={this.handleCloseModal}
+                    className="Modal"
+                    overlayClassName="Overlay"
+        >
+          <AddImagePanel func={this.handleCloseModal} images={this.state.images}/>
+        </ReactModal>
 
         {/*<Lightbox
           images={[
