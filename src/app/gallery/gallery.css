@@ -1,21 +1,20 @@
-
-.btn-search {
-  margin-left: 0.5rem;
-}
-
 .search-tags a, .search-tags i  {
   margin-left: 10px;
 }
 
 .gallery-panel {
   margin-top: 10px;
+  min-height: 75vh;
+  box-shadow:
+      0 -1px 2px 0 rgba(0, 0, 0, .2),
+      -23px 0 20px -23px rgba(0, 0, 0, .5),
+      23px 0 20px -23px rgba(0, 0, 0, .5);
 }
 
 .images-panel {
   width: 70%;
   padding-top: 1%;
   padding-left: 1%;
-  background-color: bisque;
 }
 
 .image-block {
@@ -56,10 +55,14 @@
 }
 
 .controls-info {
-  width: 29%;
+  position: fixed;
+  right: 20%;
+  width: 18%;
   margin-left: 1%;
+
+  margin-right: .5%;
+
   padding: 1%;
-  background-color: bisque;
 }
 
 .info-panel {

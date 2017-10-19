@@ -8,8 +8,8 @@ class TagItem extends Component {
           {this.props.tag}
         </span>
         <button type="button"
-                className="tag-item-delete btn btn-primary"
-                onClick={() => this.props.deleteTag(this.props.tag)}
+                className="tag-item-delete btn btn-outline-danger btn-sm"
+                onClick={() => this.props.deleteTag(this.props.tag.id)}
         >
           [x]
         </button>

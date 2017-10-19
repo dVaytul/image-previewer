@@ -31,29 +31,22 @@
 }
 
 .dragAndDropPanel {
-  height: 26rem;
+  height: 28rem;
   background-color: gainsboro;
+}
+
+.files-dropzone-gallery {
+  height: 28rem;
+}
+
+.files-dropzone-gallery:hover {
+  background-color: rgba(0, 0, 0, 0.3);
+  cursor: pointer;
 }
 
 .files-gallery-item {
   max-width: 100%;
-  max-height: 26rem;
-}
-
-.btnBrowseImg {
-  width: 100%;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0; /*кроссбраузерность добавить*/
-}
-
-.panelTitle {
-  padding: 0 1rem;
-  text-align: center;
-  font-size: 2rem;
-}
-
-.panelDescr {
-  font-size: 1rem;
+  max-height: 28rem;
 }
 
 .tagsPanel {
@@ -81,4 +74,11 @@
 .tag-item {
   display: inline-block;
   margin: 0 5px;
+}
+
+.tag-item-delete {
+  padding: 0;
+  margin-left: 3px;
+  vertical-align: top;
+  border: none;
 }
