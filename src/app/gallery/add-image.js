@@ -6,16 +6,14 @@ import TagBlock from "./tag-block";
 class AddImagePanel extends Component {
   constructor(props) {
     super(props);
-    this.state = {name: '', url: '', tagsArr: [], descr: '', files: [], tag: '', deletingTag: ''};
+    this.state = {name: '', url: '', tagsArr: [], descr: '', files: [], tag: ''};
 
     this.onNameChange = this.onNameChange.bind(this);
     this.onUrlChange = this.onUrlChange.bind(this);
     this.onTagChange = this.onTagChange.bind(this);
     this.onDescrChange = this.onDescrChange.bind(this);
     this.onFilesChange = this.onFilesChange.bind(this);
-
     this.onAddTag = this.onAddTag.bind(this);
-
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -32,9 +30,17 @@ class AddImagePanel extends Component {
   }
 
   onAddTag() {
-    let arr = this.state.tagsArr;
-    arr.push(this.state.tag);
-    this.setState({tagsArr: arr});
+    if(this.state.tag.trim() !== "") {
+      let arr = this.state.tagsArr;
+      for (let i = 0; i < arr.length; i++) {
+        if (arr[i].toLowerCase() === this.state.tag.toLowerCase()) {
+          this.setState({tagsArr: arr, tag: ''});
+          return;
+        }
+      }
+      arr.push(this.state.tag);
+      this.setState({tagsArr: arr, tag: ''});
+    }
   }
 
   onDescrChange(e) {
@@ -46,7 +52,8 @@ class AddImagePanel extends Component {
   };
 
   handleSubmit(event) {
-    if(this.state.files.length > 0) {
+    event.preventDefault();
+    if(this.state.files.length > 0 && this.state.tagsArr.length > 0) {
       this.props.images.unshift({
         "id": this.props.images.length,
         "title": this.state.name,
@@ -57,10 +64,8 @@ class AddImagePanel extends Component {
 
       this.props.func(); //close Modal Window
     } else {
-      alert("Add image, please.");
+      alert("Add image and fill all fields, please.");
     }
-
-    event.preventDefault();
   }
 
   render() {
@@ -95,7 +100,7 @@ class AddImagePanel extends Component {
 
         <section className="imgInfo flex-column ">
           <h2 className="titlePanel">Add info</h2>
-          <p>
+          <div className="new-line">
             <label>Name your media</label>
             <input type="text"
                    className="form-control"
@@ -103,26 +108,33 @@ class AddImagePanel extends Component {
                    onChange={this.onNameChange}
                    required
             />
-          </p>
-          <p>
+          </div>
+          <div className="new-line">
             <label>Add tags</label>
             <div className="tagsPanel">
               <TagBlock tagsArr={this.state.tagsArr}
-                        deleteTag={deletingTag => this.setState({deletingTag})}
+                        deleteTag={(index) => {
+                          let tags = this.state.tagsArr;
+                          tags.splice(index, 1);
+                          this.setState({tagsArr: tags});
+                        }}
               />
             </div>
             <span className="d-flex flex-row rowTag">
               <input type="text"
                      className="form-control"
                      placeholder="Write a tag..."
-                     value={this.state.value}
+                     value={this.state.tag}
                      onChange={this.onTagChange}
-                     required
               />
-              <button type="button" onClick={this.onAddTag} className="btn btn-outline-secondary btnAddTag">Add tag</button>
+              <button type="button"
+                      onClick={this.onAddTag}
+                      className="btn btn-outline-secondary btnAddTag">
+                Add tag
+              </button>
             </span>
-          </p>
-          <p>
+          </div>
+          <div className="new-line">
             <label>Add description</label>
             <textarea type="text"
                       className="form-control textareaDescr"
@@ -130,7 +142,7 @@ class AddImagePanel extends Component {
                       onChange={this.onDescrChange}
                       required
             />
-          </p>
+          </div>
           <div className="d-flex justify-content-end">
             <button type="submit" className="btn btn-success btnPublish">Publish</button>
           </div>

@@ -36,45 +36,7 @@ class SignIn extends Component {
         fieldValidationErrors.email = emailValid ? '' : ' is not valid';
         break;
       case 'password':
-        let errorText = "",
-            lenghtPass = false,
-            hasDigit = false,
-          hasNotSpecSymbols = false,
-            hasLowerLetter = false,
-            hasUpperLetter = false;
-
-        if(value.length >= 6) {
-          lenghtPass = true;
-        } else {
-          errorText += ", is to short";
-        }
-
-        if(value.match(/\d/)) {
-          hasDigit = true;
-        } else {
-          errorText += ", hasn't digit";
-        }
-
-        if(!(value.match(/_/)) && !(value.match(/\W/))) {
-          hasNotSpecSymbols = true;
-        } else {
-          errorText += ", has special symbol";
-        }
-
-        if(value.match(/[a-z]/)) {
-          hasLowerLetter = true;
-        } else {
-          errorText += ", hasn't lower case letter";
-        }
-
-        if(value.match(/[A-Z]/)) {
-          hasUpperLetter = true;
-        } else {
-          errorText += ", hasn't upper case letter";
-        }
-
-        passwordValid = lenghtPass && hasDigit && hasNotSpecSymbols && hasLowerLetter && hasUpperLetter;
-        fieldValidationErrors.password = passwordValid ? "": `${errorText.replace(errorText[0], "")}`;
+        passwordValid = (value.length > 0);
         break;
       default:
         break;
@@ -123,7 +85,7 @@ class SignIn extends Component {
                  onChange={this.handleUserInput}
                  required
           />
-          <a href='#'>
+          <a href=''>
             <small>
               Forgot your password?
             </small>

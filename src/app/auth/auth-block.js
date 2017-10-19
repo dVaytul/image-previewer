@@ -9,15 +9,13 @@ class AuthBlock extends Component {
     this.onLogOut = this.onLogOut.bind(this);
   }
 
-  onLogOut(event) {
-    this.state.loggedIn = AuthService.logOut();
+  onLogOut() {
+    this.setState( {loggedIn: AuthService.logOut()});
   }
 
   render()
   {
-    this.state.loggedIn = AuthService.isLoggedIn();
-
-    if(this.state.loggedIn) {
+    if(AuthService.isLoggedIn()) {
       let user = AuthService.getCurrentUser();
 
       return (

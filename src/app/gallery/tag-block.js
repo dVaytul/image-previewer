@@ -3,12 +3,12 @@ import TagItem from "./tag-item";
 
 class TagBlock extends Component {
   render () {
-    const tagItems = this.props.tagsArr.map((tag) => {
+    const tagItems = this.props.tagsArr.map((tag, index) => {
       return (
         <TagItem
-          key={tag.id}
+          key={index}
           tag={tag}
-          deleteTag={this.props.deleteTag}
+          deleteTag={() => this.props.deleteTag(index)}
         />
       );
     });

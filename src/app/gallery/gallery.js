@@ -52,7 +52,7 @@ class Gallery extends Component {
     }
 
     this.setState({images: newImageBlock});
-    if(newImageBlock == []){
+    if(newImageBlock === []){
       this.setState({activeImage: {}});
     } else {
       this.setState({activeImage: newImageBlock[0]});
@@ -69,7 +69,7 @@ class Gallery extends Component {
   };
 
   onAddImage = () => {
-    //this.props.history.push("/add-image");
+    this.componentDidMount();
     this.handleOpenModal();
   };
 
@@ -77,7 +77,7 @@ class Gallery extends Component {
     return (
       <div className="">  {/*gallery*/}
 
-        <SearchInput onSearchTextChange={prop => this.changeImageBlock({prop})}/>
+        <SearchInput onSearchTextChange={prop => this.changeImageBlock({prop})} />
 
         <div className="gallery-panel d-flex">
           <div className="images-panel flex-column">

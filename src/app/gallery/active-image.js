@@ -2,10 +2,10 @@ import React, { Component } from "react";
 
 class ActiveImage extends Component {
   render () {
-    if (this.props.activeImage == undefined) {
+    if (this.props.activeImage === undefined) {
       return (<h4>Nothing found</h4>);
     }
-    if (this.props.activeImage.id == undefined) {
+    if (this.props.activeImage.id === undefined) {
       return (<span>Loading...</span>);
     }
     else {

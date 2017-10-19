@@ -86,7 +86,7 @@ class SignUp extends Component {
         passwordValid = lengthPass && hasDigit && hasNotSpecSymbols && hasLowerLetter && hasUpperLetter;
         fieldValidationErrors.password = passwordValid ? "": `${errorText.replace(errorText[0], "")}`;
 
-        if (this.state.confirmed != "") {
+        if (this.state.confirmed !== "") {
           matchPasswords = (this.state.confirmed === this.state.password);
           fieldValidationErrors.confirmed = matchPasswords ? "" : " does not match";
         }

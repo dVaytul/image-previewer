@@ -1,7 +1,7 @@
 const user = {
-  name: "Dmitry",
+  name: "Nicolas",
   pass: "Qwerty1",
-  email: "dmitry@email.com",
+  email: "cage@email.com",
   loggedIn: false
 };
 
