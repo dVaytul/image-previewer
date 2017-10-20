@@ -26,7 +26,7 @@ class Gallery extends Component {
   };
 
   componentDidMount() {  //get json data from the file
-    const data = DATA;
+    const data = DATA.slice(0,33);
     this.setState({images: data});
     this.setState({searchImages: data});
     this.setState({activeImage: data[0]});
