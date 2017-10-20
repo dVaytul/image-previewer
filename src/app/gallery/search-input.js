@@ -21,10 +21,10 @@ class SearchInput extends Component {
           </span>
         <div className="search-tags">
           <i>e.g.</i>
-          <a href="">officia</a>
-          <a href="">amet</a>
-          <a href="">dolore</a>
-          <a href="">elit</a>
+          <a href="#">officia</a>
+          <a href="#">amet</a>
+          <a href="#">dolore</a>
+          <a href="#">elit</a>
         </div>
       </div>
     );
