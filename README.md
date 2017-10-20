@@ -1,4 +1,4 @@
-#Image-previewer#
+# Image-previewer #
 
 [DEMO](https://dvaytul.github.io/image-previewer/)
 
