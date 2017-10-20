@@ -1,4 +1,4 @@
-#Image-previewer
+#Image-previewer#
 
 [DEMO](https://dvaytul.github.io/image-previewer/)
 
@@ -10,5 +10,6 @@ is a front-end part (client) of react app that provides:
 * state view of active image;
 * searching images by tag.
 
+---
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
