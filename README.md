@@ -2,7 +2,7 @@
 
 [DEMO](https://dvaytul.github.io/image-previewer/)
 
-is a front-end part (client) of react app that provides:
+It's a front-end part (client) of react app that provides:
 
 * user registration and authorization with validations;
 * gallery of images;
