@@ -1,9 +1,10 @@
 .Modal {
+  overflow-y: auto;
   position: absolute;
-  top: 100px;
-  left: 40px;
-  right: 40px;
-  bottom: 100px;
+  top: 10vh;
+  left: 5%;
+  right: 7%;
+  bottom: 10vh;
   background-color: white;
 }
 
@@ -17,26 +18,30 @@
 }
 
 .formAddImgPanel {
+  display: flex;
   width: 70%;
   margin: 0 15%;
 }
 
 .imgSrc, .imgInfo {
+  display: flex;
+  flex-direction: column;
   width: 50%;
   margin: 20px 10px;
 }
 
 .titlePanel {
-  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
 }
 
 .dragAndDropPanel {
-  height: 27rem;
+  height: 28rem;
+  margin-top: 1rem;
   background-color: gainsboro;
 }
 
 .files-dropzone-gallery {
-  height: 27rem;
+  height: 28rem;
 }
 
 .files-dropzone-gallery:hover {
@@ -46,7 +51,7 @@
 
 .files-gallery-item {
   max-width: 100%;
-  max-height: 27rem;
+  max-height: 28rem;
 }
 
 .tagsPanel {
@@ -55,7 +60,7 @@
 }
 
 .new-line {
-  margin: 10px 0;
+  margin: .5rem 0;
 }
 
 .rowTag {
@@ -85,4 +90,46 @@
   margin-left: 3px;
   vertical-align: top;
   border: none;
+}
+
+
+@media (max-width: 1024px) {
+  .formAddImgPanel {
+    width: 100%;
+    margin: 0;
+  }
+}
+
+
+@media (max-width: 480px) {
+  .formAddImgPanel {
+    display: block;
+  }
+  .imgInfo, .imgSrc {
+    width: 90%;
+  }
+
+  .titlePanel {
+    margin-bottom: 0;
+  }
+
+  .textOnDropPanel {
+    padding: 0 1rem;
+    text-align: center;
+  }
+
+  .dragAndDropPanel {
+    height: 8rem;
+    width: 50%;
+  }
+
+  .files-dropzone-gallery {
+    height: 8rem;
+  }
+
+  .files-gallery-item
+  {
+    max-width: 100%;
+    max-height: 8rem;
+  }
 }

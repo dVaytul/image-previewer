@@ -70,8 +70,8 @@ class AddImagePanel extends Component {
 
   render() {
     return (
-      <form className="formAddImgPanel d-flex " onSubmit={this.handleSubmit}>
-        <section className="imgSrc flex-column">
+      <form className="formAddImgPanel" onSubmit={this.handleSubmit}>
+        <section className="imgSrc">
           <h2 className="titlePanel">Add image</h2>
           <div className="dragAndDropPanel">
 
@@ -88,7 +88,7 @@ class AddImagePanel extends Component {
                     <img className='files-gallery-item ' src={file.preview.url} key={file.id}  />
                   )}
                   </div>
-                : <div>
+                : <div className="textOnDropPanel">
                   Drop image here
                   or
                   click to browse
@@ -98,7 +98,7 @@ class AddImagePanel extends Component {
           </div>
         </section>
 
-        <section className="imgInfo flex-column ">
+        <section className="imgInfo">
           <h2 className="titlePanel">Add info</h2>
           <div className="new-line">
             <label>Name your media</label>

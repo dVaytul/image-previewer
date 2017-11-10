@@ -23,6 +23,8 @@ class Gallery extends Component {
     this.componentDidMount = this.componentDidMount.bind(this);
     this.handleOpenModal = this.handleOpenModal.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
+
+    this.handleScroll = this.handleScroll.bind(this);
   };
 
   componentDidMount() {  //get json data from the file
@@ -30,7 +32,21 @@ class Gallery extends Component {
     this.setState({images: data});
     this.setState({searchImages: data});
     this.setState({activeImage: data[0]});
+
+    console.log('componentDidMount invoked');
+    document.querySelector('.scrollDiv').addEventListener('scroll', this.handleScroll);
   };
+
+  componentWillUnmount() {
+    console.log('componentWillUnmount invoked');
+    document.querySelector('.scrollDiv').removeEventListener('scroll', this.handleScroll);
+  };
+
+  handleScroll(event) {
+    //alert("Scrolled!");    // worked only for addImagePanel
+    console.log('handleScroll invoked');
+  };
+
 
   changeImageBlock(prop) {
     let searchText = prop['prop'].toLowerCase(),
@@ -75,7 +91,7 @@ class Gallery extends Component {
 
   render() {
     return (
-      <div className="">  {/*gallery*/}
+      <div className="scrollDiv" onScroll={this.handleScroll}>  {/*gallery*/}
 
         <SearchInput onSearchTextChange={prop => this.changeImageBlock({prop})} />
 
@@ -87,10 +103,11 @@ class Gallery extends Component {
             <p>No more images...</p>
           </div>
 
-          <div className="controls-info  flex-column">
+          <div className="controls-info  flex-column sticky">
             <button type="button"
                     className="btn btn-primary btn-block btn-addImage"
-                    onClick={this.onAddImage}>
+                    onClick={this.onAddImage}
+            >
               Upload image
             </button>
             <div className="info-panel">
