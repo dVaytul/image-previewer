@@ -3,6 +3,8 @@ import "./add-image.css";
 import Files from "react-files";
 import TagBlock from "./tag-block";
 
+import ImageService from "../service/image-service";
+
 class AddImagePanel extends Component {
   constructor(props) {
     super(props);
@@ -54,13 +56,15 @@ class AddImagePanel extends Component {
   handleSubmit(event) {
     event.preventDefault();
     if(this.state.files.length > 0 && this.state.tagsArr.length > 0) {
-      this.props.images.unshift({
+      let image = {
         "id": this.props.images.length,
         "title": this.state.name,
         "tags": this.state.tagsArr,
         "url": this.state.files[0].preview.url,
         "descr": this.state.descr
-      });
+      };
+      ImageService.addImageToData(image);
+      this.props.images.unshift(image);
 
       this.props.func(); //close Modal Window
     } else {

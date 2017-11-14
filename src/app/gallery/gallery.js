@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import "./gallery.css";
 import {withRouter} from "react-router-dom";
-import DATA from "./DATA.json";
+//import DATA from "./DATA.json";
 import ImageBlock from "./image-block";
 import ActiveImage from "./active-image";
 import SearchInput from "./search-input";
 import ReactModal from "react-modal";
 import AddImagePanel from "./add-image";
+
+import ImageService from "../service/image-service";
 
 class Gallery extends Component {
   constructor(props) {
@@ -23,30 +25,18 @@ class Gallery extends Component {
     this.componentDidMount = this.componentDidMount.bind(this);
     this.handleOpenModal = this.handleOpenModal.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
+  };
 
-    this.handleScroll = this.handleScroll.bind(this);
+  componentWillMount() {
+    ImageService.resetData();
   };
 
   componentDidMount() {  //get json data from the file
-    const data = DATA.slice(0,33);
+    let data = ImageService.getInitialData();  //DATA.slice(0,33);
     this.setState({images: data});
     this.setState({searchImages: data});
     this.setState({activeImage: data[0]});
-
-    console.log('componentDidMount invoked');
-    document.querySelector('.scrollDiv').addEventListener('scroll', this.handleScroll);
   };
-
-  componentWillUnmount() {
-    console.log('componentWillUnmount invoked');
-    document.querySelector('.scrollDiv').removeEventListener('scroll', this.handleScroll);
-  };
-
-  handleScroll(event) {
-    //alert("Scrolled!");    // worked only for addImagePanel
-    console.log('handleScroll invoked');
-  };
-
 
   changeImageBlock(prop) {
     let searchText = prop['prop'].toLowerCase(),
@@ -89,9 +79,25 @@ class Gallery extends Component {
     this.handleOpenModal();
   };
 
+  loadMoreData = (event) => {
+    if(event.type === "click") {
+      let data = ImageService.getNextData();
+      let loadingAnimation = document.querySelector(".spinner");
+      loadingAnimation.classList.toggle("is-visible");
+      setTimeout( ()=>{
+        loadingAnimation.classList.toggle("is-visible");
+        this.setState({images: data});
+        this.setState({searchImages: data});
+      }, 1500 );
+    }
+    if(event.type === "scroll") {
+      console.log("scrolling");
+    }
+  };
+
   render() {
     return (
-      <div className="scrollDiv" onScroll={this.handleScroll}>  {/*gallery*/}
+      <div className="scrollDiv">  {/*gallery*/}
 
         <SearchInput onSearchTextChange={prop => this.changeImageBlock({prop})} />
 
@@ -100,10 +106,9 @@ class Gallery extends Component {
             <div>
               <ImageBlock images={this.state.images} selectImage={activeImage => this.setState({activeImage})} />
             </div>
-            <p>No more images...</p>
           </div>
 
-          <div className="controls-info  flex-column sticky">
+          <div className="controls-info  flex-column ">
             <button type="button"
                     className="btn btn-primary btn-block btn-addImage"
                     onClick={this.onAddImage}
@@ -115,6 +120,20 @@ class Gallery extends Component {
             </div>
           </div>
         </div> {/*gallery-panel*/}
+
+        <div className="loading">
+          <div className="spinner is-visible">
+            <div className="bounce1"></div>
+            <div className="bounce2"></div>
+            <div className="bounce3"></div>
+          </div>
+          <button type="button"
+                  className="btn btn-primary btn-block"
+                  onClick={this.loadMoreData}
+          >
+            Get more images
+          </button>
+        </div>
 
         <ReactModal isOpen={this.state.showModal}
                     onRequestClose={this.handleCloseModal}
