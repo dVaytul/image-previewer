@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import "./gallery.css";
 import {withRouter} from "react-router-dom";
-//import DATA from "./DATA.json";
+import $ from "jquery";
+import {debounce} from "throttle-debounce";
 import ImageBlock from "./image-block";
 import ActiveImage from "./active-image";
 import SearchInput from "./search-input";
 import ReactModal from "react-modal";
 import AddImagePanel from "./add-image";
-
 import ImageService from "../service/image-service";
 
 class Gallery extends Component {
@@ -17,25 +17,58 @@ class Gallery extends Component {
       images: [],
       searchImages: [],
       activeImage: {},
-
-      //---for ModalWindow---
-      showModal: false,
+      showModal: false, //for ModalWindow
     };
 
     this.componentDidMount = this.componentDidMount.bind(this);
     this.handleOpenModal = this.handleOpenModal.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
+    this.handleScroll = this.handleScroll.bind(this);
+    this.loadMoreData = debounce(1000, this.loadMoreData);
   };
 
   componentWillMount() {
     ImageService.resetData();
+    window.removeEventListener("scroll", this.handleScroll);
   };
 
-  componentDidMount() {  //get json data from the file
-    let data = ImageService.getInitialData();  //DATA.slice(0,33);
+  componentDidMount() {
+    let data = ImageService.getInitialData();
     this.setState({images: data});
     this.setState({searchImages: data});
     this.setState({activeImage: data[0]});
+    window.addEventListener("scroll", this.handleScroll);
+  };
+
+  handleScroll() {
+    let activeImageInfo = $(".controls-info");
+    let loadingAnimation = $(".spinner");
+    let imagesGalleryTop = $(".images-panel")[0].getBoundingClientRect().top;
+    let footerTop = $(".footer")[0].getBoundingClientRect().top;
+
+    if(imagesGalleryTop <= 0 && !(activeImageInfo.hasClass("sticky"))) {
+      activeImageInfo.addClass("sticky");
+    }
+
+    if(imagesGalleryTop >= 0 && activeImageInfo.hasClass("sticky")) {
+      activeImageInfo.removeClass("sticky");
+    }
+
+    if (document.body.clientHeight >= footerTop) {
+      if (!ImageService.allImagesLoaded()) {
+        loadingAnimation.removeClass("hidden-elem");    // => visible
+        this.loadMoreData(loadingAnimation);
+      } else {
+        $(".end-of-gallery").removeClass("hidden-elem");  // => visible
+      }
+    }
+  };
+
+  loadMoreData = (loadingAnimation) => {
+    let data = ImageService.getNextData();
+    loadingAnimation.addClass("hidden-elem");  // => not visible
+    this.setState({images: data});
+    this.setState({searchImages: data});
   };
 
   changeImageBlock(prop) {
@@ -67,11 +100,13 @@ class Gallery extends Component {
 
   //---for ModalWindow---
   handleOpenModal () {
+    $("html,body").addClass("block-scroll");
     this.setState({ showModal: true });
   };
 
   handleCloseModal () {
     this.setState({ showModal: false });
+    $("html,body").removeClass("block-scroll");
   };
 
   onAddImage = () => {
@@ -79,40 +114,20 @@ class Gallery extends Component {
     this.handleOpenModal();
   };
 
-  loadMoreData = (event) => {
-    if(event.type === "click") {
-      let data = ImageService.getNextData();
-      let loadingAnimation = document.querySelector(".spinner");
-      loadingAnimation.classList.toggle("is-visible");
-      setTimeout( ()=>{
-        loadingAnimation.classList.toggle("is-visible");
-        this.setState({images: data});
-        this.setState({searchImages: data});
-      }, 1500 );
-    }
-    if(event.type === "scroll") {
-      console.log("scrolling");
-    }
-  };
-
   render() {
     return (
-      <div className="scrollDiv">  {/*gallery*/}
-
+      <div className="scrollDiv" onScroll={this.handleScroll}>  {/*gallery*/}
         <SearchInput onSearchTextChange={prop => this.changeImageBlock({prop})} />
-
         <div className="gallery-panel d-flex">
           <div className="images-panel flex-column">
             <div>
               <ImageBlock images={this.state.images} selectImage={activeImage => this.setState({activeImage})} />
             </div>
           </div>
-
           <div className="controls-info  flex-column ">
             <button type="button"
                     className="btn btn-primary btn-block btn-addImage"
-                    onClick={this.onAddImage}
-            >
+                    onClick={this.onAddImage}>
               Upload image
             </button>
             <div className="info-panel">
@@ -122,24 +137,20 @@ class Gallery extends Component {
         </div> {/*gallery-panel*/}
 
         <div className="loading">
-          <div className="spinner is-visible">
-            <div className="bounce1"></div>
-            <div className="bounce2"></div>
-            <div className="bounce3"></div>
+          <div className="end-of-gallery d-flex justify-content-center hidden-elem">
+            All images loaded
           </div>
-          <button type="button"
-                  className="btn btn-primary btn-block"
-                  onClick={this.loadMoreData}
-          >
-            Get more images
-          </button>
+          <div className="spinner hidden-elem">
+            <div className="bounce1" />
+            <div className="bounce2" />
+            <div className="bounce3" />
+          </div>
         </div>
 
         <ReactModal isOpen={this.state.showModal}
                     onRequestClose={this.handleCloseModal}
                     className="Modal"
-                    overlayClassName="Overlay"
-        >
+                    overlayClassName="Overlay">
           <AddImagePanel func={this.handleCloseModal} images={this.state.images}/>
         </ReactModal>
       </div>

@@ -28,6 +28,8 @@ let getNextData = () => {
   return images.all;
 };
 
+let allImagesLoaded = () => images.last;
+
 let resetData = () => images.current = 33;
 
 let addImageToData = (image) => {
@@ -38,6 +40,7 @@ let addImageToData = (image) => {
 export default {
   getInitialData,
   getNextData,
+  allImagesLoaded,
   resetData,
   addImageToData
 }

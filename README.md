@@ -5,10 +5,11 @@
 It's a front-end part (client) of react app that provides:
 
 * user registration and authorization with validations;
-* gallery of images;
+* gallery of images with infinite scroll;
 * adding new image with description;
 * state view of active image;
-* searching images by tag.
+* searching images by tag;
+* responsive design.
 
 ---
 

@@ -1,5 +1,29 @@
 html {
   font-size: 16px;
+  overflow-x: hidden;  /*doc width = client + scroll width*/
+  margin-right: calc(-1 * (100vw - 100%));
+}
+
+.App {
+  height: 100vh;
+  width: 100%;
+  /*overflow-y: scroll;*/
+}
+
+.gallery {
+  display: flex;
+  flex-direction: column;
+  margin: 0 20%;
+  height: 100vh;
+}
+
+.content {
+  flex: 1;
+  padding: 1rem 0;
+}
+
+.btn {
+  cursor: pointer;
 }
 
 @media (max-width: 1024px) {
@@ -18,26 +42,4 @@ html {
   html {
     font-size: 10px;
   }
-}
-
-.App {
-  height: 100vh;
-  width: 100%;
-  overflow-y: scroll;
-}
-
-.gallery {
-  display: flex;
-  flex-direction: column;
-  margin: 0 20%;
-  height: 100vh;
-}
-
-.content {
-  flex: 1;
-  padding: 1rem 0;
-}
-
-.btn {
-  cursor: pointer;
 }
