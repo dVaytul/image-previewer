@@ -32,6 +32,8 @@ let allImagesLoaded = () => images.last;
 
 let resetData = () => images.current = 33;
 
+let getLastId = () => images.all.length;
+
 let addImageToData = (image) => {
   images.all.unshift(image);
   images.current++;
@@ -42,6 +44,7 @@ export default {
   getNextData,
   allImagesLoaded,
   resetData,
+  getLastId,
   addImageToData
 }
 

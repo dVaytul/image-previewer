@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./signin.css";
 import {Link, withRouter} from "react-router-dom";
 import AuthService from "../service/auth-service";
-import FormErrors from './form-errors';
+import FormErrors from "./form-errors";
 
 class SignIn extends Component {
   constructor (props) {

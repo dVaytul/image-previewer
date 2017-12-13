@@ -57,7 +57,7 @@ class AddImagePanel extends Component {
     event.preventDefault();
     if(this.state.files.length > 0 && this.state.tagsArr.length > 0) {
       let image = {
-        "id": this.props.images.length,
+        "id": ImageService.getLastId(),
         "title": this.state.name,
         "tags": this.state.tagsArr,
         "url": this.state.files[0].preview.url,
