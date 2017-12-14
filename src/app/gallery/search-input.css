@@ -1,0 +1,26 @@
+.search {
+  position: relative;
+}
+
+.search__tags a,
+.search__tags i  {
+  margin-left: 10px;
+}
+
+.search__suggestions {
+  position: absolute;
+  z-index: 100;
+  max-height: 300px;
+  width: 100%;
+  border: 1px solid gainsboro;
+  border-top: 0;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  box-shadow: 0 6px 4px -3px rgba(0, 0, 0, .5);
+  background: white;
+}
+
+.search__suggestions--hidden {
+  visibility: hidden;
+}
+

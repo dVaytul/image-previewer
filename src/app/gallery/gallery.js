@@ -16,6 +16,7 @@ class Gallery extends Component {
     this.state = {
       images: [],
       searchImages: [],
+      searchSuggestions: [],
       activeImage: {},
       showModal: false, //for ModalWindow
     };
@@ -35,7 +36,7 @@ class Gallery extends Component {
   componentDidMount() {
     let data = ImageService.getInitialData();
     this.setState({images: data});
-    this.setState({searchImages: data});
+    this.setState({searchImages: ImageService.getAllData()});
     this.setState({activeImage: data[0]});
     window.addEventListener("scroll", this.handleScroll);
   };
@@ -68,13 +69,15 @@ class Gallery extends Component {
     let data = ImageService.getNextData();
     loadingAnimation.addClass("hidden-elem");  // => not visible
     this.setState({images: data});
-    this.setState({searchImages: data});
+    this.setState({searchImages: ImageService.getAllData()});
   };
 
+  //---search methods---
   changeImageBlock(prop) {
     let searchText = prop['prop'].toLowerCase(),
         searchImages = this.state.searchImages,
-        newImageBlock = [];
+        newImageBlock = [],
+        newSuggestList = [];
 
     if(!searchText) {
       newImageBlock = searchImages;
@@ -83,6 +86,7 @@ class Gallery extends Component {
         let arr = searchImages[i]['tags'];
         for (let j = 0; j < arr.length; j++) {
           if (arr[j].toLowerCase().indexOf(searchText) > -1) {
+            newSuggestList.push(arr[j]);
             newImageBlock.push(searchImages[i]);
             j = arr.length;
           }
@@ -90,7 +94,11 @@ class Gallery extends Component {
       }
     }
 
+    this.setState({searchSuggestions: newSuggestList.filter((item, pos) => {
+      return newSuggestList.indexOf(item) === pos;
+    })});
     this.setState({images: newImageBlock});
+
     if(newImageBlock === []){
       this.setState({activeImage: {}});
     } else {
@@ -117,7 +125,8 @@ class Gallery extends Component {
   render() {
     return (
       <div className="scrollDiv" onScroll={this.handleScroll}>  {/*gallery*/}
-        <SearchInput onSearchTextChange={prop => this.changeImageBlock({prop})} />
+        <SearchInput searchSuggestions={this.state.searchSuggestions}
+                     onSearchTextChange={prop => this.changeImageBlock({prop})} />
         <div className="gallery-panel d-flex">
           <div className="images-panel flex-column">
             <div>

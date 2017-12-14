@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import TagItem from "./tag-item";
 
 class TagBlock extends Component {

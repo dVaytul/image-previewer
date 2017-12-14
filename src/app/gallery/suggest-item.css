@@ -1,0 +1,8 @@
+.suggestions__item {
+  padding: .25rem .75rem;
+}
+
+.suggestions__item:hover {
+  cursor: pointer;
+  background: gainsboro;
+}

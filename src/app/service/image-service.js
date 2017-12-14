@@ -9,6 +9,8 @@ let images = {
   last: false
 };
 
+let getAllData = () => images.all;
+
 let getInitialData = () => images.all.slice(0, images.current);
 
 let getNextData = () => {
@@ -40,6 +42,7 @@ let addImageToData = (image) => {
 };
 
 export default {
+  getAllData,
   getInitialData,
   getNextData,
   allImagesLoaded,
