@@ -77,16 +77,16 @@ class Gallery extends Component {
     let searchText = prop['prop'].toLowerCase(),
         searchImages = this.state.searchImages,
         newImageBlock = [],
-        newSuggestList = [];
+        newSuggestBlock = [];
 
     if(!searchText) {
       newImageBlock = searchImages;
     } else {
-      for (let i = 0; i < searchImages.length; i++) {
+      for(let i = 0; i < searchImages.length; i++) {
         let arr = searchImages[i]['tags'];
-        for (let j = 0; j < arr.length; j++) {
+        for(let j = 0; j < arr.length; j++) {
           if (arr[j].toLowerCase().indexOf(searchText) > -1) {
-            newSuggestList.push(arr[j]);
+            newSuggestBlock.push(arr[j]);
             newImageBlock.push(searchImages[i]);
             j = arr.length;
           }
@@ -94,8 +94,41 @@ class Gallery extends Component {
       }
     }
 
-    this.setState({searchSuggestions: newSuggestList.filter((item, pos) => {
-      return newSuggestList.indexOf(item) === pos;
+    this.setState({searchSuggestions: newSuggestBlock.filter((item, pos) => {
+      return newSuggestBlock.indexOf(item) === pos;
+    })});
+    this.setState({images: newImageBlock});
+
+    if(newImageBlock === []){
+      this.setState({activeImage: {}});
+    } else {
+      this.setState({activeImage: newImageBlock[0]});
+    }
+  };
+
+  changeImageBlock2(prop) {
+    let searchText = prop['prop'].toLowerCase(),
+      searchImages = this.state.searchImages,
+      newImageBlock = [],
+      newSuggestBlock = [];
+
+    if(!searchText) {
+      newImageBlock = searchImages;
+    } else {
+      for (let i = 0; i < searchImages.length; i++) {
+        let arr = searchImages[i]['tags'];
+        for (let j = 0; j < arr.length; j++) {
+          if (arr[j].toLowerCase() === searchText) {
+            newSuggestBlock.push(arr[j]);
+            newImageBlock.push(searchImages[i]);
+            j = arr.length;
+          }
+        }
+      }
+    }
+
+    this.setState({searchSuggestions: newSuggestBlock.filter((item, pos) => {
+      return newSuggestBlock.indexOf(item) === pos;
     })});
     this.setState({images: newImageBlock});
 
@@ -126,11 +159,13 @@ class Gallery extends Component {
     return (
       <div className="scrollDiv" onScroll={this.handleScroll}>  {/*gallery*/}
         <SearchInput searchSuggestions={this.state.searchSuggestions}
-                     onSearchTextChange={prop => this.changeImageBlock({prop})} />
+                     onSearchTextChange={prop => this.changeImageBlock({prop})}
+                     onSearchTextChange2={prop => this.changeImageBlock2({prop})}/>
         <div className="gallery-panel d-flex">
           <div className="images-panel flex-column">
             <div>
-              <ImageBlock images={this.state.images} selectImage={activeImage => this.setState({activeImage})} />
+              <ImageBlock images={this.state.images}
+                          selectImage={activeImage => this.setState({activeImage})} />
             </div>
           </div>
           <div className="controls-info  flex-column ">

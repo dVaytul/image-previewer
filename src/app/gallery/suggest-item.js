@@ -2,9 +2,14 @@ import React, { Component } from "react";
 import "./suggest-item.css";
 
 class SuggestItem extends Component {
+  onSelectSuggest = () => {
+    this.props.onSelectItem(this.props.tag)
+  };
+
   render () {
     return (
-      <div className="suggestions__item">
+      <div className="suggestions__item"
+           onClick={this.onSelectSuggest}>
         {this.props.tag}
       </div>
     );

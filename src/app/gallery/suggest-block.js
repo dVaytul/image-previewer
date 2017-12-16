@@ -11,15 +11,16 @@ class SuggestBlock extends Component {
 
     const suggestItems = suggest.map((tag, index) => {
       return (
-        <SuggestItem
-          key={index}
-          tag={tag}
-        />
+        <SuggestItem key={index}
+                     tag={tag}
+                     onSelectItem={this.props.onSelectBlock}/>
       );
     });
 
     return (
-      <div>{suggestItems}</div>
+      <div>
+        {suggestItems}
+      </div>
     );
   }
 }
