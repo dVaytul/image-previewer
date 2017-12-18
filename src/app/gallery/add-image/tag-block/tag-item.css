@@ -1,0 +1,11 @@
+.tag-item {
+  display: inline-block;
+  margin: 0 5px;
+}
+
+.tag-item__btn-delete {
+  padding: 0;
+  margin-left: 3px;
+  border: none;
+  vertical-align: top;
+}

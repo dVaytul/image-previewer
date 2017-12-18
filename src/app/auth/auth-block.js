@@ -5,8 +5,9 @@ import AuthService from "../service/auth-service";
 class AuthBlock extends Component {
   constructor(props) {
     super(props);
-    this.state = {loggedIn: AuthService.isLoggedIn()};
-    this.onLogOut = this.onLogOut.bind(this);
+    this.state = {
+      loggedIn: AuthService.isLoggedIn()
+    };
   }
 
   onLogOut() {
@@ -20,10 +21,12 @@ class AuthBlock extends Component {
 
       return (
         <div>
-          <span className="auth-block-username">
-            {`Hi, ${user.name} |`}
+          <span className="auth-block__username">
+            {`Hi, ${user.name} | `}
           </span>
-          <Link to="/" onClick={this.onLogOut}> Log out</Link>
+          <Link to="/" onClick={this.onLogOut.bind(this)}>
+            Log out
+          </Link>
         </div>
       );
 

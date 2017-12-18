@@ -15,20 +15,21 @@ class SignIn extends Component {
       passwordValid: false,
       formValid: false
     };
-    this.handleSubmit = this.handleSubmit.bind(this);
   };
 
   handleUserInput = (e) => {
     const name = e.target.name;
     const value = e.target.value;
-    this.setState({[name]: value},
-      () => { this.validateField(name, value) });
+    this.setState( {
+      [name]: value},
+      () => { this.validateField(name, value)
+    });
   };
 
   validateField(fieldName, value) {
-    let fieldValidationErrors = this.state.formErrors;
-    let emailValid = this.state.emailValid;
-    let passwordValid = this.state.passwordValid;
+    let fieldValidationErrors = this.state.formErrors,
+        emailValid = this.state.emailValid,
+        passwordValid = this.state.passwordValid;
 
     switch(fieldName) {
       case 'email':
@@ -41,7 +42,8 @@ class SignIn extends Component {
       default:
         break;
     }
-    this.setState({formErrors: fieldValidationErrors,
+    this.setState( {
+      formErrors: fieldValidationErrors,
       emailValid: emailValid,
       passwordValid: passwordValid
     }, this.validateForm);
@@ -51,21 +53,22 @@ class SignIn extends Component {
     this.setState({formValid: this.state.emailValid && this.state.passwordValid});
   };
 
-  errorClass(error) {
-    return(error.length === 0 ? '' : 'has-error');
+  errorClass = (error) => {
+    return (error.length === 0 ? '' : 'has-error');
   };
 
   handleSubmit(event) {
-    alert('Email: ' + this.state.email + '\nPass: ' + this.state.password);
+    alert('Email: ' + this.state.email
+          + '\nPass: ' + this.state.password);
     event.preventDefault();
     AuthService.logIn();
     this.props.history.push("/gallery");
-  }
+  };
 
   render() {
     return (
-      <form className="formSignInUp container" onSubmit={this.handleSubmit}>
-        <h2 className="formTitle">Sign in</h2>
+      <form className="signIn-signUp-form container" onSubmit={this.handleSubmit.bind(this)}>
+        <h2 className="form-title">Sign in</h2>
         <div className={`form-group ${this.errorClass(this.state.formErrors.email)}`}>
           <input type="email"
                  className="form-control"
@@ -73,8 +76,7 @@ class SignIn extends Component {
                  placeholder="Email"
                  value={this.state.email}
                  onChange={this.handleUserInput}
-                 required
-            />
+                 required/>
         </div>
         <div className={`form-group ${this.errorClass(this.state.formErrors.password)}`}>
           <input type="password"
@@ -83,8 +85,7 @@ class SignIn extends Component {
                  placeholder="Password"
                  value={this.state.password}
                  onChange={this.handleUserInput}
-                 required
-          />
+                 required/>
           <a href=''>
             <small>
               Forgot your password?
@@ -92,7 +93,7 @@ class SignIn extends Component {
           </a>
         </div>
 
-        <div className="">
+        <div>
           <FormErrors formErrors={this.state.formErrors} />
         </div>
 
@@ -102,11 +103,11 @@ class SignIn extends Component {
           Sign in
         </button>
         <hr />
-        <p className="linkNewAcc">
+        <div className="form-link">
           <Link to="/signup">
             Don't have an account? Sign up here
           </Link>
-        </p>
+        </div>
       </form>
     );
   }

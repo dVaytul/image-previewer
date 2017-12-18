@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import "./signup.css";
 import {Link, withRouter} from "react-router-dom";
 import AuthService from "../service/auth-service";
 import FormErrors from "./form-errors";
@@ -18,14 +17,15 @@ class SignUp extends Component {
       matchPasswords: false,
       formValid: false
     };
-    this.handleSubmit = this.handleSubmit.bind(this);
   };
 
   handleUserInput = (e) => {
     const name = e.target.name;
     const value = e.target.value;
-    this.setState({[name]: value},
-      () => { this.validateField(name, value) });
+    this.setState( {
+      [name]: value},
+      () => { this.validateField(name, value)
+    });
   };
 
   validateField(fieldName, value) {
@@ -38,7 +38,7 @@ class SignUp extends Component {
     switch(fieldName) {
       case 'username':
         usernameValid = value.match(/^[A-Za-z]+$/);
-        fieldValidationErrors.username = usernameValid ? '' : ' can contain only letters'
+        fieldValidationErrors.username = usernameValid ? '' : ' can contain only letters';
         break;
       case 'email':
         emailValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
@@ -47,11 +47,11 @@ class SignUp extends Component {
 
       case 'password':
         let errorText = "",
-          lengthPass = false,
-          hasDigit = false,
-          hasNotSpecSymbols = false,
-          hasLowerLetter = false,
-          hasUpperLetter = false;
+            lengthPass = false,
+            hasDigit = false,
+            hasNotSpecSymbols = false,
+            hasLowerLetter = false,
+            hasUpperLetter = false;
 
         if(value.length >= 6) {
           lengthPass = true;
@@ -84,7 +84,7 @@ class SignUp extends Component {
         }
 
         passwordValid = lengthPass && hasDigit && hasNotSpecSymbols && hasLowerLetter && hasUpperLetter;
-        fieldValidationErrors.password = passwordValid ? "": `${errorText.replace(errorText[0], "")}`;
+        fieldValidationErrors.password = passwordValid ? "" : `${errorText.replace(errorText[0], "")}`;
 
         if (this.state.confirmed !== "") {
           matchPasswords = (this.state.confirmed === this.state.password);
@@ -100,7 +100,8 @@ class SignUp extends Component {
       default:
         break;
     }
-    this.setState({formErrors: fieldValidationErrors,
+    this.setState( {
+      formErrors: fieldValidationErrors,
       usernameValid: usernameValid,
       emailValid: emailValid,
       passwordValid: passwordValid,
@@ -113,74 +114,64 @@ class SignUp extends Component {
                    && this.state.passwordValid && this.state.matchPasswords});
   };
 
-  errorClass(error) {
+  errorClass = (error) => {
     return(error.length === 0 ? '' : 'has-error');
   };
 
   handleSubmit(event) {
-    alert('Username: ' + this.state.username + '\nEmail: ' + this.state.email
-          + '\nPass: ' + this.state.password + '\nConfirmed Pass: ' + this.state.confirmed);
+    alert('Username: ' + this.state.username
+          + '\nEmail: ' + this.state.email
+          + '\nPass: ' + this.state.password
+          + '\nConfirmed Pass: ' + this.state.confirmed);
     event.preventDefault();
     AuthService.logIn();
     this.props.history.push("/gallery");
-  }
+  };
 
   render() {
     return (
       <div>
-        <form className="formSignInUp container" onSubmit={this.handleSubmit}>
-          <h2 className="formTitle">Sign up</h2>
+        <form className="signIn-signUp-form container" onSubmit={this.handleSubmit.bind(this)}>
+          <h2 className="form-title">Sign up</h2>
           <div className={`form-group ${this.errorClass(this.state.formErrors.username)}`}>
-            <p>
-              <input type="text"
-                     className="form-control"
-                     name="username"
-                     placeholder="Username"
-                     value={this.state.username}
-                     onChange={this.handleUserInput}
-                     required
-              />
-            </p>
+            <input type="text"
+                   className="form-control"
+                   name="username"
+                   placeholder="Username"
+                   value={this.state.username}
+                   onChange={this.handleUserInput}
+                   required/>
           </div>
           <div className={`form-group ${this.errorClass(this.state.formErrors.email)}`}>
-            <p>
-              <input type="email"
-                     className="form-control"
-                     name="email"
-                     placeholder="Email"
-                     value={this.state.email}
-                     onChange={this.handleUserInput}
-                     required
-              />
-            </p>
+            <input type="email"
+                   className="form-control"
+                   name="email"
+                   placeholder="Email"
+                   value={this.state.email}
+                   onChange={this.handleUserInput}
+                   required/>
           </div>
           <div className={`form-group ${this.errorClass(this.state.formErrors.password)}`}>
-            <p>
-              <input type="password"
-                     className="form-control"
-                     name="password"
-                     placeholder="Password"
-                     value={this.state.password}
-                     onChange={this.handleUserInput}
-                     required
-              />
-            </p>
+            <input type="password"
+                   className="form-control"
+                   name="password"
+                   placeholder="Password"
+                   value={this.state.password}
+                   onChange={this.handleUserInput}
+                   required/>
           </div>
           <div className={`form-group ${this.errorClass(this.state.formErrors.confirmed)}`}>
-            <p>
-              <input type="password"
-                     className="form-control"
-                     name="confirmed"
-                     placeholder="Confirm password"
-                     value={this.state.confirmed}
-                     onChange={this.handleUserInput}
-                     required
-              />
-            </p>
+            <input type="password"
+                   className="form-control"
+                   name="confirmed"
+                   placeholder="Confirm password"
+                   value={this.state.confirmed}
+                   onChange={this.handleUserInput}
+                   required/>
           </div>
 
-          <div className="">
-            <FormErrors formErrors={this.state.formErrors} />
+          <div>
+            <FormErrors formErrors={this.state.formErrors}/>
           </div>
 
           <button type="submit"
@@ -190,11 +181,11 @@ class SignUp extends Component {
           </button>
 
           <hr />
-          <p className="linkNewAcc">
+          <div className="form-link">
             <Link to="/signin">
               Already have an account? Sign in here
             </Link>
-          </p>
+          </div>
         </form>
       </div>
     );

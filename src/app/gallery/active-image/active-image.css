@@ -1,0 +1,8 @@
+.info__image img{
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.info__titles {
+  font-weight: bold;
+}

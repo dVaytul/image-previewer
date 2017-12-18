@@ -5,11 +5,9 @@ class ImageBlock extends Component {
   render () {
     const imageItems = this.props.images.map((image) => {
       return (
-        <ImageItem
-          key={image.id}
-          image={image}
-          selectImage={this.props.selectImage}
-        />
+        <ImageItem key={image.id}
+                   image={image}
+                   selectImage={this.props.selectImage}/>
       );
     });
 

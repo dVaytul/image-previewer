@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-import "./main.css";
 import {Switch, Route} from "react-router-dom";
 import Gallery from "../gallery/gallery";
 import SignIn from "../auth/signin";
 import SignUp from "../auth/signup";
-import AddImagePanel from "../gallery/add-image";
+import AddImagePanel from "../gallery/add-image/add-image";
 
 class Main extends Component {
   render() {

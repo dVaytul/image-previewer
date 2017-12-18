@@ -1,41 +1,39 @@
 import React, { Component } from "react";
 import "./add-image.css";
 import Files from "react-files";
-import TagBlock from "./tag-block";
-
-import ImageService from "../service/image-service";
+import TagBlock from "./tag-block/tag-block";
+import ImageService from "../../service/image-service";
 
 class AddImagePanel extends Component {
   constructor(props) {
     super(props);
-    this.state = {name: '', url: '', tagsArr: [], descr: '', files: [], tag: ''};
-
-    this.onNameChange = this.onNameChange.bind(this);
-    this.onUrlChange = this.onUrlChange.bind(this);
-    this.onTagChange = this.onTagChange.bind(this);
-    this.onDescrChange = this.onDescrChange.bind(this);
-    this.onFilesChange = this.onFilesChange.bind(this);
-    this.onAddTag = this.onAddTag.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.state = {
+      name: '',
+      url: '',
+      tagsArr: [],
+      descr: '',
+      files: [],
+      tag: ''
+    };
   }
 
-  onNameChange(e) {
+  onNameChange = (e) => {
     this.setState({name: e.target.value});
-  }
+  };
 
-  onUrlChange(e) {
+  onUrlChange = (e) => {
     this.setState({url: e.target.value});
-  }
+  };
 
-  onTagChange(e) {
+  onTagChange = (e) => {
     this.setState({tag: e.target.value});
-  }
+  };
 
-  onAddTag() {
+  onAddTag = () => {
     if(this.state.tag.trim() !== "") {
       let arr = this.state.tagsArr;
-      for (let i = 0; i < arr.length; i++) {
-        if (arr[i].toLowerCase() === this.state.tag.toLowerCase()) {
+      for(let i = 0; i < arr.length; i++) {
+        if(arr[i].toLowerCase() === this.state.tag.toLowerCase()) {
           this.setState({tagsArr: arr, tag: ''});
           return;
         }
@@ -43,17 +41,17 @@ class AddImagePanel extends Component {
       arr.push(this.state.tag);
       this.setState({tagsArr: arr, tag: ''});
     }
-  }
+  };
 
-  onDescrChange(e) {
+  onDescrChange = (e) => {
     this.setState({descr: e.target.value});
-  }
+  };
 
-  onFilesChange(files) {
+  onFilesChange = (files) => {
     this.setState({files: files});
   };
 
-  handleSubmit(event) {
+  handleSubmit = (event) => {
     event.preventDefault();
     if(this.state.files.length > 0 && this.state.tagsArr.length > 0) {
       let image = {
@@ -66,33 +64,31 @@ class AddImagePanel extends Component {
       ImageService.addImageToData(image);
       this.props.images.unshift(image);
 
-      this.props.func(); //close Modal Window
+      this.props.closeModal();
     } else {
       alert("Add image and fill all fields, please.");
     }
-  }
+  };
 
   render() {
     return (
-      <form className="formAddImgPanel" onSubmit={this.handleSubmit}>
-        <section className="imgSrc">
-          <h2 className="titlePanel">Add image</h2>
-          <div className="dragAndDropPanel">
-
-            <Files className="files-dropzone-gallery d-flex justify-content-center align-items-center"
+      <form className="add-img-panel" onSubmit={this.handleSubmit}>
+        <section className="img-src">
+          <h2 className="img-src__title">Add image</h2>
+          <div className="drag-n-drop">
+            <Files className="drag-n-drop__dropzone d-flex justify-content-center align-items-center"
                    ref="files"
                    onChange={this.onFilesChange}
                    accepts={["image/*"]}
                    multiple={false}
-                   clickable={true}
-            >
+                   clickable={true}>
               {this.state.files.length > 0
-                ? <div className='files-gallery'>
+                ? <div>
                   {this.state.files.map((file) =>
-                    <img className='files-gallery-item ' src={file.preview.url} key={file.id}  />
+                    <img className="drag-n-drop__image" src={file.preview.url} key={file.id}  />
                   )}
-                  </div>
-                : <div className="textOnDropPanel">
+                </div>
+                : <div className="drag-n-drop__text">
                   Drop image here
                   or
                   click to browse
@@ -102,53 +98,51 @@ class AddImagePanel extends Component {
           </div>
         </section>
 
-        <section className="imgInfo">
-          <h2 className="titlePanel">Add info</h2>
+        <section className="img-info">
+          <h2 className="img-info__title">Add info</h2>
           <div className="new-line">
             <label>Name your media</label>
             <input type="text"
                    className="form-control"
                    value={this.state.value}
                    onChange={this.onNameChange}
-                   required
-            />
+                   required/>
           </div>
           <div className="new-line">
             <label>Add tags</label>
-            <div className="tagsPanel">
+            <div className="img-info__tags">
               <TagBlock tagsArr={this.state.tagsArr}
                         deleteTag={(index) => {
                           let tags = this.state.tagsArr;
                           tags.splice(index, 1);
                           this.setState({tagsArr: tags});
-                        }}
-              />
+                        }}/>
             </div>
-            <span className="d-flex flex-row rowTag">
+            <span className="img-info__add-tag d-flex flex-row">
               <input type="text"
                      className="form-control"
                      placeholder="Write a tag..."
                      value={this.state.tag}
-                     onChange={this.onTagChange}
-              />
+                     onChange={this.onTagChange}/>
               <button type="button"
                       onClick={this.onAddTag}
-                      className="btn btn-outline-secondary btnAddTag">
+                      className="img-info__add-tag-btn btn btn-outline-secondary">
                 Add tag
               </button>
             </span>
           </div>
           <div className="new-line">
             <label>Add description</label>
-            <textarea type="text"
-                      className="form-control textareaDescr"
+            <textarea className="img-info__description form-control"
                       value={this.state.value}
                       onChange={this.onDescrChange}
-                      required
-            />
+                      required/>
           </div>
           <div className="d-flex justify-content-end">
-            <button type="submit" className="btn btn-success btnPublish">Publish</button>
+            <button type="submit"
+                    className="img-info__publish-btn btn btn-success">
+              Publish
+            </button>
           </div>
         </section>
       </form>

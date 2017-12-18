@@ -1,10 +1,10 @@
 .Modal {
-  overflow-y: auto;
   position: absolute;
   top: 10vh;
   left: 5%;
   right: 7%;
   bottom: 10vh;
+  overflow-y: auto;
   background-color: white;
 }
 
@@ -17,44 +17,46 @@
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-.formAddImgPanel {
+.add-img-panel {
   display: flex;
   width: 70%;
   margin: 0 15%;
 }
 
-.imgSrc, .imgInfo {
+.img-src,
+.img-info {
   display: flex;
   flex-direction: column;
   width: 50%;
   margin: 20px 10px;
 }
 
-.titlePanel {
+.img-src__title,
+.img-info__title{
   font-size: 1.5rem;
 }
 
-.dragAndDropPanel {
+.drag-n-drop {
   height: 28rem;
   margin-top: 1rem;
   background-color: gainsboro;
 }
 
-.files-dropzone-gallery {
+.drag-n-drop__dropzone {
   height: 28rem;
 }
 
-.files-dropzone-gallery:hover {
-  background-color: rgba(0, 0, 0, 0.3);
+.drag-n-drop__dropzone:hover {
   cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.3);
 }
 
-.files-gallery-item {
+.drag-n-drop__image {
   max-width: 100%;
   max-height: 28rem;
 }
 
-.tagsPanel {
+.img-info__tags {
   height: 5rem;
   background-color: gainsboro;
 }
@@ -63,72 +65,60 @@
   margin: .5rem 0;
 }
 
-.rowTag {
+.img-info__add-tag {
   margin-top: 0.2rem;
 }
 
-.btnAddTag {
+.img-info__add-tag-btn {
   margin-left: .5rem;
 }
 
-.textareaDescr {
+.img-info__description {
   height: 7rem;
 }
 
-.btnPublish {
+.img-info__publish-btn {
   width: 10rem;
 }
 
-/*---for tags---*/
-.tag-item {
-  display: inline-block;
-  margin: 0 5px;
-}
-
-.tag-item-delete {
-  padding: 0;
-  margin-left: 3px;
-  vertical-align: top;
-  border: none;
-}
-
-
+/*-- media query --*/
 @media (max-width: 1024px) {
-  .formAddImgPanel {
+  .add-img-panel {
     width: 100%;
     margin: 0;
   }
 }
 
-
 @media (max-width: 480px) {
-  .formAddImgPanel {
+  .add-img-panel {
     display: block;
   }
-  .imgInfo, .imgSrc {
+
+  .img-src,
+  .img-info {
     width: 90%;
   }
 
-  .titlePanel {
+  .img-src__title,
+  .img-info__title{
     margin-bottom: 0;
   }
 
-  .textOnDropPanel {
+  .drag-n-drop__text {
     padding: 0 1rem;
     text-align: center;
   }
 
-  .dragAndDropPanel {
+  .drag-n-drop {
     height: 8rem;
     width: 50%;
   }
 
-  .files-dropzone-gallery {
+  .drag-n-drop__dropzone {
     height: 8rem;
   }
 
-  .files-gallery-item
-  {
+  .drag-n-drop__image {
     max-width: 100%;
     max-height: 8rem;
   }

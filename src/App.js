@@ -9,9 +9,9 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <div className="gallery">
+        <div className="page">
           <Header/>
-          <div className="content">
+          <div className="main-content">
             <Main/>
           </div>
           <Footer/>

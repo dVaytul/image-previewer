@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./search-input.css";
 import $ from "jquery";
 import {Link} from "react-router-dom";
-import SuggestBlock from "./suggest-block";
+import SuggestBlock from "./suggest-block/suggest-block";
 
 class SearchInput extends Component {
   constructor(props) {

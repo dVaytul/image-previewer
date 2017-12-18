@@ -17,7 +17,7 @@ let auth = (email, pass) => {
   });
 };
 
-let isLoggedIn = () => {     //user === null -> not loggined
+let isLoggedIn = () => {
   return user.loggedIn;
 };
 
@@ -28,7 +28,6 @@ let logOut = () => {
 
 let logIn = () => {
   user.loggedIn = true;
-//  return user.loggedIn;
 };
 
 let setNewUser = (name, pass, email) => {

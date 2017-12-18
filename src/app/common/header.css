@@ -1,23 +1,23 @@
 .header {
-  min-height: 70px; /* правильно ли??*/
+  min-height: 70px;
   border-bottom: 1px solid gainsboro;
 }
 
-.logo img{
-  margin: 0 10px;
+.header__logo img{
   width: 60px;
   height: 60px;
+  margin: 0 10px;
 }
 
-.logo:hover {
+.header__logo:hover {
   cursor: pointer;
 }
 
-.header-title {
+.header__title {
   margin-left: 10px;
   font-size: 1.5rem;
 }
 
-.auth {
+.header__auth-block {
   margin-right: 10px;
 }

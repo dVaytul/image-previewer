@@ -21,8 +21,8 @@ let getNextData = () => {
       }
       else {
         images.last = true;
-        images.current = images.all.length; //unnecessary
-        i = images.nextStep;    //or continue ??
+        images.current = images.all.length;
+        i = images.nextStep;
       }
     }
     return images.all.slice(0, images.current);
