@@ -70,7 +70,7 @@ class Gallery extends Component {
   };
 
   //---search methods---
-  changeImageBlock = (prop) => {
+  changeImageBlock = (prop, value) => {
     let searchText = prop['prop'].toLowerCase(),
         searchImages = this.state.searchImages,
         newImageBlock = [],
@@ -82,40 +82,8 @@ class Gallery extends Component {
       for(let i = 0; i < searchImages.length; i++) {
         let arr = searchImages[i]['tags'];
         for(let j = 0; j < arr.length; j++) {
-          if (arr[j].toLowerCase().indexOf(searchText) > -1) {
-            newSuggestBlock.push(arr[j]);
-            newImageBlock.push(searchImages[i]);
-            j = arr.length;
-          }
-        }
-      }
-    }
-
-    this.setState({searchSuggestions: newSuggestBlock.filter((item, pos) => {
-      return newSuggestBlock.indexOf(item) === pos;
-    })});
-    this.setState({images: newImageBlock});
-
-    if(newImageBlock === []){
-      this.setState({activeImage: {}});
-    } else {
-      this.setState({activeImage: newImageBlock[0]});
-    }
-  };
-
-  changeImageBlock2 = (prop) => {
-    let searchText = prop['prop'].toLowerCase(),
-      searchImages = this.state.searchImages,
-      newImageBlock = [],
-      newSuggestBlock = [];
-
-    if(!searchText) {
-      newImageBlock = searchImages;
-    } else {
-      for (let i = 0; i < searchImages.length; i++) {
-        let arr = searchImages[i]['tags'];
-        for (let j = 0; j < arr.length; j++) {
-          if (arr[j].toLowerCase() === searchText) {
+          if( (!value && arr[j].toLowerCase().indexOf(searchText) > -1)
+              || (value && arr[j].toLowerCase() === searchText) ) {
             newSuggestBlock.push(arr[j]);
             newImageBlock.push(searchImages[i]);
             j = arr.length;
@@ -156,8 +124,7 @@ class Gallery extends Component {
     return (
       <div onScroll={this.handleScroll}>  {/*main-content*/}
         <SearchInput searchSuggestions={this.state.searchSuggestions}
-                     onSearchTextChange={prop => this.changeImageBlock({prop})}
-                     onSearchTextChange2={prop => this.changeImageBlock2({prop})}/>
+                     onSearchTextChange={(prop, value) => this.changeImageBlock({prop}, value)}/>
         <div className="gallery-panel d-flex">
           <div className="images-panel flex-column">
             <div>

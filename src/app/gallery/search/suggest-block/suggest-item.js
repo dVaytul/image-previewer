@@ -9,7 +9,8 @@ class SuggestItem extends Component {
   render () {
     return (
       <div className="suggestions__item"
-           onClick={this.onSelectSuggest}>
+           onClick={this.onSelectSuggest}
+           onKeyDown={(event) => { if(event.key === "Enter") this.onSelectSuggest();} }>
         {this.props.tag}
       </div>
     );

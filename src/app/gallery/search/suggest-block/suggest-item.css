@@ -6,3 +6,7 @@
   cursor: pointer;
   background: gainsboro;
 }
+
+.suggestions__item--focused {
+  background: dodgerblue;
+}

@@ -85,7 +85,10 @@ class AddImagePanel extends Component {
               {this.state.files.length > 0
                 ? <div>
                   {this.state.files.map((file) =>
-                    <img className="drag-n-drop__image" src={file.preview.url} key={file.id}  />
+                    <img className="drag-n-drop__image"
+                         src={file.preview.url}
+                         alt={file.preview.title}
+                         key={file.id}  />
                   )}
                 </div>
                 : <div className="drag-n-drop__text">
